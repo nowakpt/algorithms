@@ -4,35 +4,41 @@
 #include <memory>
 
 
-template <typename Tv, typename Te>
-class Vertice
-{
-public:
-    std::map<const std::weak_ptr<Vertice>, Te> _edges;
-    Tv _value;
-
-    template <typename T>
-    Vertice(T&& value) : _value(std::forward<T>(value)) {}
-};
-
-
 template <typename Tv = int, typename Te = int>
 class Graph
 {
-private:
-    typedef Vertice<Tv, Te> vertice_type;
-
-    std::set<std::shared_ptr<vertice_type> > _vertices;
-
 public:
+    typedef std::map<const Tv*, Te> edges_map_t;
+    typedef std::map<Tv, edges_map_t> vertices_map_t;
+
     Graph() {}
 
     template <typename T>
-    void addVertice(T&& verticeValue)
+    void addVertice(T&& value)
     {
-        auto v = std::make_shared<vertice_type>(std::forward<T>(verticeValue));
-        _vertices.insert(v);
+        _vertices.emplace(std::forward<T>(value), edges_map_t{});
     }
 
+    template <typename T>
+    void addEdge(const Tv& from, const Tv& to, T&& value)
+    {
+        auto iterFrom = _vertices.find(from);
+        auto iterTo = _vertices.find(to);
+
+        if (iterFrom != _vertices.end() &&
+            iterTo != _vertices.end() &&
+            iterFrom != iterTo)
+        {
+            iterFrom->second.emplace(&iterTo->first, std::forward<T>(value));
+        }
+    }
+
+    // iterators
+    typename vertices_map_t::iterator begin() { return _vertices.begin(); }
+    typename vertices_map_t::iterator end() { return _vertices.end(); }
+
+
+private:
+    vertices_map_t _vertices;
 };
 
