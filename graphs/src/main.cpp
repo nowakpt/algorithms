@@ -52,5 +52,10 @@ int main()
     gr.deleteEdge(98, 99);
 
     printGraph(gr);
+
+    std::cout << " * Clearing the graph" << std::endl;
+    gr.clear();
+
+    printGraph(gr);
 }
 

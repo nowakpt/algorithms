@@ -13,6 +13,12 @@ public:
 
     Graph() {}
 
+
+    void clear()
+    {
+        _vertices.clear();
+    }
+
     template <typename T>
     void addVertice(T&& value)
     {
