@@ -5,4 +5,6 @@ add_executable(main
     src/main.cpp
 )
 
+enable_testing()
+add_subdirectory(test)
 
