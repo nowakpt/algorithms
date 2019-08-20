@@ -74,11 +74,21 @@ public:
     }
 
     // iterators
-    typename vertices_map_t::const_iterator begin() const { return _vertices.begin(); }
-    typename vertices_map_t::const_iterator end() const { return _vertices.end(); }
+    using size_type = typename vertices_map_t::size_type;
+    using difference_type = typename vertices_map_t::difference_type;
+    using value_type = typename vertices_map_t::value_type;
+    using reference = typename vertices_map_t::reference;
+    using const_reference = typename vertices_map_t::const_reference;
+    using iterator = typename vertices_map_t::iterator;
+    using const_iterator = typename vertices_map_t::const_iterator;
+    using pointer = typename vertices_map_t::pointer;
+    using const_pointer = typename vertices_map_t::const_pointer;
 
-    typename vertices_map_t::iterator begin() { return _vertices.begin(); }
-    typename vertices_map_t::iterator end() { return _vertices.end(); }
+    const_iterator begin() const { return _vertices.begin(); }
+    const_iterator end() const { return _vertices.end(); }
+
+    iterator begin() { return _vertices.begin(); }
+    iterator end() { return _vertices.end(); }
 
 
 private:
