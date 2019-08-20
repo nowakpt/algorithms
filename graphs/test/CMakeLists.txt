@@ -37,7 +37,8 @@ add_subdirectory(
 
 # Define test target and link against gtest
 add_executable(GraphTest graph/GraphTest.cpp)
-target_link_libraries(GraphTest gtest_main)
+target_link_libraries(GraphTest gtest_main gmock)
+target_include_directories(GraphTest PRIVATE ../src)
 add_test(
     NAME Graph
     COMMAND GraphTest
