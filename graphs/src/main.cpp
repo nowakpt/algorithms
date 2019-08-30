@@ -6,12 +6,15 @@ void printGraph(const Graph<>& graph)
 {
     std::cout << std::endl;
 
-    for (const auto& v : graph)
+    for (Graph<>::Vertice vert : graph)
     {
-        std::cout << "vertice: " << v.first << std::endl;
-        for (const auto& e : v.second)
+        std::cout << "vertice: " << vert.value() << std::endl;
+        for (Graph<>::Edge edge : vert.edges())
         {
-            std::cout << "  edge: " << v.first << " -> " << *e.first << ": " << e.second << std::endl;
+            std::cout
+                << "  edge: "
+                << vert.value() << " -> " << edge.target()
+                << ": " << edge.value() << std::endl;
         }
     }
     std::cout << std::endl;

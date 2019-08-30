@@ -73,6 +73,45 @@ public:
         }
     }
 
+    // accessing vertices/edges
+    /**
+    * Classes Vertice and Edge are wrappers for std::pair<...> objects returned
+    * by map iterators. They allow to use explicictly named getter methods
+    * instead of accessing them by fields `first` & `second` of the std::pair.
+    *
+    * They can be used in range-based for loops, e.g.:
+    *
+    *   for (Graph<>::Vertice v : graph) {
+    *     for (Graph<>::Edge e : v.edges()) {
+    *         // ...
+    *     }
+    *   }
+    *
+    */
+    class Vertice
+    {
+        using data_t = typename vertices_map_t::value_type;
+        const data_t& _data;
+
+    public:
+        Vertice(const data_t& data) : _data(data) {}
+
+        const Tv& value() const { return _data.first; }
+        const edges_map_t& edges() const { return _data.second; }
+    };
+
+    class Edge
+    {
+        using data_t = typename edges_map_t::value_type;
+        const data_t& _data;
+
+    public:
+        Edge(const data_t& data) : _data(data) {}
+
+        const Tv& target() const { return *_data.first; }
+        const Te& value() const { return _data.second; }
+    };
+
     // iterators
     using size_type = typename vertices_map_t::size_type;
     using difference_type = typename vertices_map_t::difference_type;
