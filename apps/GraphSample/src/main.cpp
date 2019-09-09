@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Graph.hpp"
+#include <Graph/Graph.hpp>
 
 
 void printGraph(const Graph<>& graph)

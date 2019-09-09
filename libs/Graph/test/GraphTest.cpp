@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "gmock/gmock-matchers.h"
-#include "Graph.hpp"
+#include <gmock/gmock-matchers.h>
+#include <Graph/Graph.hpp>
 
 using ::testing::Contains;
 using ::testing::Key;

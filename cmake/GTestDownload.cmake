@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 2.8.11)
 
 # Download and unpack googletest at configure time
-configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+configure_file(
+    ${CMAKE_CURRENT_LIST_DIR}/GTestDownload.cmake.in
+    googletest-download/CMakeLists.txt
+)
 
 execute_process(
     COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
@@ -35,12 +38,12 @@ add_subdirectory(
     EXCLUDE_FROM_ALL
 )
 
-# Define test target and link against gtest
-add_executable(GraphTest graph/GraphTest.cpp)
-target_link_libraries(GraphTest gtest_main gmock)
-target_include_directories(GraphTest PRIVATE ../src)
-add_test(
-    NAME Graph
-    COMMAND GraphTest
-)
-
+# # Define test target and link against gtest
+# add_executable(GraphTest graph/GraphTest.cpp)
+# target_link_libraries(GraphTest gtest_main gmock)
+# target_include_directories(GraphTest PRIVATE ../src)
+# add_test(
+#     NAME Graph
+#     COMMAND GraphTest
+# )
+# 
