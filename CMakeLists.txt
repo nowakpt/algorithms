@@ -8,4 +8,5 @@ include(cmake/GTestDownload.cmake)
 
 add_subdirectory(libs)
 add_subdirectory(apps)
+add_subdirectory(external)
 
