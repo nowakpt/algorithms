@@ -1,26 +1,19 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
+#include "Canvas.hpp"
 
 int main()
 {
     std::cout << "Hello world!" << std::endl;
 
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    Canvas canvas(800, 600, "2D Canvas");
+/*
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-
-    while (window.isOpen())
+    canvas.draw(shape);
+*/
+    while (canvas.isOpen())
     {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
-
-        window.clear();
-        window.draw(shape);
-        window.display();
+        canvas.handleEvents();
     }
 
     return 0;
