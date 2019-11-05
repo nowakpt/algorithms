@@ -1,9 +1,11 @@
-#include "Canvas.hpp"
+#include "Window.hpp"
+#include <thread>
+#include <chrono>
 
-
-Canvas::Canvas(int width, int height, const std::string& title) :
+Window::Window(int width, int height, const std::string& title) :
     _window(sf::VideoMode(width, height), title),
     _view(sf::FloatRect(0.f, 0.f, width, height)),
+    _drawable(nullptr),
     _isMousePressed(false),
     _zoomLevel(1.f)
 {
@@ -11,15 +13,21 @@ Canvas::Canvas(int width, int height, const std::string& title) :
 }
 
 
-void Canvas::handleEvents()
+void Window::handleEvents()
 {
-    _window.clear();
-//    _window.draw(shapes);
     _window.setView(_view);
+
+    auto localDrawable = _drawable;
+    if (localDrawable)
+    {
+        Canvas canvas(_window);
+        localDrawable->draw(canvas);
+    }
+
     _window.display();
 
     sf::Event event;
-    while (_window.pollEvent(event))
+    if (_window.waitEvent(event))
     {
         switch (event.type)
         {
@@ -62,6 +70,15 @@ void Canvas::handleEvents()
                 }
                 break;
         }
+    }
+}
+
+
+void Window::startEventHandling()
+{
+    while (isOpen())
+    {
+        handleEvents();
     }
 }
 

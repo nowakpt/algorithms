@@ -1,25 +1,24 @@
 #pragma once
-#include <string>
-#include <SFML/Graphics.hpp>
-#include <SFML/Graphics/View.hpp>
-
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Color.hpp>
 
 class Canvas
 {
-private:
-    sf::RenderWindow _window;
-    sf::View _view;
-
-    bool _isMousePressed;
-    sf::Vector2i _mousePos;
-    float _zoomLevel;
+    sf::RenderWindow& _window;
 
 public:
-    Canvas(int width, int height, const std::string& title);
+    Canvas(sf::RenderWindow& window) : _window(window) {}
 
-    bool isOpen() { return _window.isOpen(); }
+    void clear(const sf::Color& color = sf::Color(0, 0, 0, 255))
+    {
+        _window.clear(color);
+    }
 
-    void handleEvents();
+    template <typename... Args>
+    void draw(Args... args)
+    {
+        _window.draw(args...);
+    }
 
 };
 
