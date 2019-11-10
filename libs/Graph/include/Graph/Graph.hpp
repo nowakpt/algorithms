@@ -129,6 +129,15 @@ public:
     iterator begin() { return _vertices.begin(); }
     iterator end() { return _vertices.end(); }
 
+    const_iterator find(const Tv& vertice) const
+    {
+        return _vertices.find(vertice);
+    }
+
+    iterator find(const Tv& vertice)
+    {
+        return _vertices.find(vertice);
+    }
 
 private:
     vertices_map_t _vertices;

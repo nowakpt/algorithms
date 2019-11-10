@@ -2,8 +2,20 @@
 #include <thread>
 #include <chrono>
 
+namespace
+{
+static sf::ContextSettings getContextSettings()
+{
+    sf::ContextSettings settings {};
+    settings.antialiasingLevel = 4;
+    return settings;
+}
+
+} // namespace
+
+
 Window::Window(int width, int height, const std::string& title) :
-    _window(sf::VideoMode(width, height), title),
+    _window(sf::VideoMode(width, height), title, sf::Style::Default, getContextSettings()),
     _view(sf::FloatRect(0.f, 0.f, width, height)),
     _drawable(nullptr),
     _isMousePressed(false),
@@ -37,7 +49,7 @@ void Window::handleEvents()
 
             case sf::Event::MouseWheelScrolled:
                 {
-                    float zoom = 1.f + 0.05f * event.mouseWheelScroll.delta;
+                    float zoom = 1.f - 0.05f * event.mouseWheelScroll.delta;
                     _zoomLevel *= zoom;
                     _view.zoom(zoom);
                 }

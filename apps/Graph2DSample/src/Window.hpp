@@ -27,7 +27,7 @@ public:
 
     void startEventHandling();
 
-    void setDrawable(std::shared_ptr<Drawable> drawable)
+    void setDrawable(const std::shared_ptr<Drawable>& drawable)
     {
         _drawable = std::move(drawable);
     }

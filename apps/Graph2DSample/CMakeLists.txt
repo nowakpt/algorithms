@@ -1,6 +1,7 @@
 add_executable(Graph2DSample
     src/main.cpp
     src/Window.cpp
+    src/DrawableGraph.cpp
 )
 
 target_link_libraries(Graph2DSample
