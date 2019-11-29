@@ -2,6 +2,8 @@ add_executable(Graph2DSample
     src/main.cpp
     src/Window.cpp
     src/DrawableGraph.cpp
+    src/DrawableVertice.cpp
+    src/DrawableEdge.cpp
     src/FontLoader.cpp
 )
 

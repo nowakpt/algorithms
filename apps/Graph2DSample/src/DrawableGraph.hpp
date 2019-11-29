@@ -1,7 +1,8 @@
 #pragma once
 #include "Window.hpp"
+#include "DrawableVertice.hpp"
+#include "DrawableEdge.hpp"
 #include <Graph/Graph.hpp>
-#include <cmath>
 #include <mutex>
 
 
@@ -31,6 +32,7 @@ public:
     void update(const Graph2D& graph);
 
 private:
+/*
     struct DrawableVertice
     {
         sf::CircleShape _circle;
@@ -57,7 +59,7 @@ private:
 
         DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, int value);
     };
-
+*/
     static constexpr double deltaAngle = 0.52;
     std::vector<DrawableVertice> _drawableVertices;
     std::vector<DrawableEdge> _drawableEdges;
