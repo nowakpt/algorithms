@@ -39,7 +39,7 @@ private:
         static constexpr int radius = 20;
         static constexpr int textSize = 26;
 
-        DrawableVertice(const sf::Vector2f& position, const sf::Font& font, char label);
+        DrawableVertice(const sf::Vector2f& position, char label);
     };
 
     struct DrawableEdge
@@ -55,15 +55,13 @@ private:
         static constexpr double labelDistance = 15.0;
         static constexpr unsigned int color = 0x888888FF;
 
-        DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, const sf::Font& font, int value);
+        DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, int value);
     };
 
     static constexpr double deltaAngle = 0.52;
-    sf::Font _font;
     std::vector<DrawableVertice> _drawableVertices;
     std::vector<DrawableEdge> _drawableEdges;
     std::mutex _drawableItemsMutex;
 
-    const sf::Font& getFont() const { return _font; }
 };
 

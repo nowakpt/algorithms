@@ -1,21 +1,20 @@
 #include "DrawableGraph.hpp"
+#include "FontLoader.hpp"
 
 
 DrawableGraph::DrawableGraph()
 {
-    _font.loadFromFile("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf");
-    //TODO: use fontconfig to load fonts
 }
 
 
-DrawableGraph::DrawableVertice::DrawableVertice(const sf::Vector2f& position, const sf::Font& font, char label) :
+DrawableGraph::DrawableVertice::DrawableVertice(const sf::Vector2f& position, char label) :
     _circle(radius)
 {
     _circle.setOrigin(radius, radius);
     _circle.setPosition(position);
 
     _label.setString(sf::String(label));
-    _label.setFont(font);
+    _label.setFont(FontLoader::getFont());
     _label.setFillColor(sf::Color::Black);
     _label.setCharacterSize(textSize);
 
@@ -24,7 +23,7 @@ DrawableGraph::DrawableVertice::DrawableVertice(const sf::Vector2f& position, co
     _label.setPosition(position);
 }
 
-DrawableGraph::DrawableEdge::DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, const sf::Font& font, int value) :
+DrawableGraph::DrawableEdge::DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, int value) :
     _arrowTip(3)
 {
     float length = sqrt(pow(to.x - from.x, 2) + pow(to.y - from.y, 2)) - tipWidth + 1;
@@ -46,7 +45,7 @@ DrawableGraph::DrawableEdge::DrawableEdge(const sf::Vector2f& from, const sf::Ve
     float labelPosX = 0.20 * from.x + 0.80 * to.x - labelDistance * sin(angle);
     float labelPosY = 0.20 * from.y + 0.80 * to.y + labelDistance * cos(angle);
     _label.setString(std::to_string(value));
-    _label.setFont(font);
+    _label.setFont(FontLoader::getFont());
     _label.setCharacterSize(textSize);
 
     auto labelBounds = _label.getLocalBounds();
@@ -85,7 +84,7 @@ void DrawableGraph::update(const Graph2D& graph)
         const auto& point = v.value();
         sf::Vector2f position(point.x, point.y);
         // add DrawableVertice to the collection
-        newVertices.emplace_back(position, getFont(), point.id);
+        newVertices.emplace_back(position, point.id);
     }
 
     for (Graph2D::Vertice v : graph)
@@ -109,7 +108,7 @@ void DrawableGraph::update(const Graph2D& graph)
             sf::Vector2f startPoint(from.x + r * cos(angle + d), from.y + r * sin(angle + d));
             sf::Vector2f endPoint(to.x - r * cos(angle - d), to.y - r * sin(angle - d));
 
-            newEdges.emplace_back(startPoint, endPoint, angle, getFont(), e.value());
+            newEdges.emplace_back(startPoint, endPoint, angle, e.value());
         }
     }
 
