@@ -8,9 +8,14 @@ DrawableGraph::DrawableGraph()
 }
 
 
+DrawableGraph::DrawableGraph(const Graph2D& graph)
+{
+    addDrawableElements(graph);
+}
+
+
 void DrawableGraph::draw(Canvas& canvas)
 {
-    std::lock_guard<std::mutex> lock(_drawableItemsMutex);
     canvas.clear(sf::Color(40, 40, 40, 255));
 
     for (DrawableEdge& de : _drawableEdges)
@@ -24,18 +29,14 @@ void DrawableGraph::draw(Canvas& canvas)
     }
 }
 
-void DrawableGraph::update(const Graph2D& graph)
+void DrawableGraph::addDrawableElements(const Graph2D& graph)
 {
-    std::vector<DrawableVertice> newVertices;
-    std::vector<DrawableEdge> newEdges;
-    //TODO: initialize vectors with proper capacity
-
     for (Graph2D::Vertice v : graph)
     {
         const auto& point = v.value();
         sf::Vector2f position(point.x, point.y);
         // add DrawableVertice to the collection
-        newVertices.emplace_back(position, point.id);
+        _drawableVertices.emplace_back(position, point.id);
     }
 
     for (Graph2D::Vertice v : graph)
@@ -59,15 +60,8 @@ void DrawableGraph::update(const Graph2D& graph)
             sf::Vector2f startPoint(from.x + r * cos(angle + d), from.y + r * sin(angle + d));
             sf::Vector2f endPoint(to.x - r * cos(angle - d), to.y - r * sin(angle - d));
 
-            newEdges.emplace_back(startPoint, endPoint, angle, e.value());
+            _drawableEdges.emplace_back(startPoint, endPoint, angle, e.value());
         }
-    }
-
-    {
-        std::lock_guard<std::mutex> lock(_drawableItemsMutex);
-
-        std::swap(_drawableVertices, newVertices);
-        std::swap(_drawableEdges, newEdges);
     }
 }
 

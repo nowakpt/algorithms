@@ -3,7 +3,6 @@
 #include "DrawableVertice.hpp"
 #include "DrawableEdge.hpp"
 #include <Graph/Graph.hpp>
-#include <mutex>
 
 
 
@@ -26,10 +25,9 @@ public:
 
 
     DrawableGraph();
+    DrawableGraph(const Graph2D& graph);
 
     void draw(Canvas& canvas) override;
-
-    void update(const Graph2D& graph);
 
 private:
 /*
@@ -63,7 +61,7 @@ private:
     static constexpr double deltaAngle = 0.52;
     std::vector<DrawableVertice> _drawableVertices;
     std::vector<DrawableEdge> _drawableEdges;
-    std::mutex _drawableItemsMutex;
 
+    void addDrawableElements(const Graph2D& graph);
 };
 

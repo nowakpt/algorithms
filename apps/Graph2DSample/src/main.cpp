@@ -1,4 +1,7 @@
 #include <iostream>
+#include <thread>
+#include <chrono>
+#include <array>
 #include "Window.hpp"
 #include <Graph/Graph.hpp>
 #include "DrawableGraph.hpp"
@@ -6,6 +9,48 @@
 
 using Graph2D = DrawableGraph::Graph2D;
 using Vertice = DrawableGraph::Point;
+using UDGraph = UpdatableDrawable<DrawableGraph>;
+
+
+void sleep()
+{
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+
+void addElementsToGraph(std::shared_ptr<UDGraph> dg)
+{
+    Graph2D graph;
+
+    std::array<const Vertice, 5> vertices = {{
+        {100, 100, 'A'},
+        {100, 500, 'B'},
+        {400, 550, 'C'},
+        {700, 500, 'D'},
+        {700, 100, 'E'}
+    }};
+
+    for (const auto& v : vertices) {
+        graph.addVertice(v);
+        dg->update(graph);
+        sleep();
+    }
+
+    int value = 10;
+
+    for (int i = 0; i < 5; i++)
+    {
+        for (int j = 0; j < 5; j++)
+        {
+            if (i == j) continue;
+
+            graph.addEdge(vertices[i], vertices[j], value++);
+            dg->update(graph);
+            sleep();
+        }
+
+    }
+}
 
 
 int main()
@@ -15,33 +60,15 @@ int main()
 
     Window window(800, 600, "2D Window");
 
-    std::shared_ptr<DrawableGraph> dg = std::make_shared<DrawableGraph>();
-    DrawableGraph::Graph2D graph;
-
-    Vertice v1{100, 100, 'A'};
-    Vertice v2{100, 500, 'B'};
-    Vertice v3{400, 550, 'C'};
-    Vertice v4{700, 500, 'D'};
-    Vertice v5{700, 100, 'E'};
-
-    graph.addVertice(v1);
-    graph.addVertice(v2);
-    graph.addVertice(v3);
-    graph.addVertice(v4);
-    graph.addVertice(v5);
-    graph.addEdge(v1, v2, 10);
-    graph.addEdge(v2, v3, 10);
-    graph.addEdge(v3, v2, 10);
-    graph.addEdge(v3, v4, 10);
-    graph.addEdge(v4, v5, 10);
-    graph.addEdge(v5, v4, 10);
-    graph.addEdge(v1, v5, 10);
-
-    dg->update(graph);
+    std::shared_ptr<UDGraph> dg = std::make_shared<UDGraph>();
 
     window.setDrawable(dg);
 
+    std::thread updater(addElementsToGraph, dg);
+
     window.startEventHandling();
+
+    updater.join();
 
     return 0;
 }
