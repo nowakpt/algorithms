@@ -21,7 +21,7 @@ Window::Window(int width, int height, const std::string& title) :
     _isMousePressed(false),
     _zoomLevel(1.f)
 {
-    // ...
+    _window.setFramerateLimit(60);
 }
 
 
@@ -39,7 +39,7 @@ void Window::handleEvents()
     _window.display();
 
     sf::Event event;
-    if (_window.waitEvent(event))
+    while (_window.pollEvent(event))
     {
         switch (event.type)
         {
