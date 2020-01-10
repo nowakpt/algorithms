@@ -31,7 +31,7 @@ void DrawableGraph::draw(Canvas& canvas)
 
 void DrawableGraph::addDrawableElements(const Graph2D& graph)
 {
-    for (Graph2D::Vertice v : graph)
+    for (const Graph2D::Vertice& v : graph)
     {
         const auto& point = v.value();
         sf::Vector2f position(point.x, point.y);
@@ -39,19 +39,14 @@ void DrawableGraph::addDrawableElements(const Graph2D& graph)
         _drawableVertices.emplace_back(position, point.id);
     }
 
-    for (Graph2D::Vertice v : graph)
+    for (const Graph2D::Vertice& v : graph)
     {
         for (Graph2D::Edge e : v.edges())
         {
             auto& from = v.value();
-            auto& to = e.target();
-            bool isTwoWayEdge = false;
-            auto targetVertice = graph.find(e.target());
-            if (targetVertice != graph.end())
-            {
-                Graph2D::Vertice vert(*targetVertice);
-                isTwoWayEdge = vert.edges().find(&v.value()) != vert.edges().end();
-            }
+            auto& to = e.target().value();
+
+            bool isTwoWayEdge = e.target().edges().count(&v) > 0;
 
             constexpr auto r = DrawableVertice::radius;
             double d = isTwoWayEdge ? deltaAngle : 0.0;

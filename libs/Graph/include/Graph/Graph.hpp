@@ -8,11 +8,32 @@ template <typename Tv = int, typename Te = int>
 class Graph
 {
 public:
-    typedef std::map<const Tv*, Te> edges_map_t;
-    typedef std::map<Tv, edges_map_t> vertices_map_t;
+    class Vertice;
+    typedef std::set<Vertice> vertices_set_t;
+    typedef std::map<const Vertice* const, const Te> edges_map_t;
+
+
+    class Vertice
+    {
+        const Tv _value;
+        edges_map_t _edges;
+
+    public:
+        template <typename T>
+        Vertice(T&& value) : _value(std::forward<T>(value)), _edges() {}
+
+        bool operator==(const Tv& rhs) const { return _value == rhs; }
+        bool operator==(const Vertice& rhs) const { return _value == rhs._value; }
+
+        bool operator <(const Vertice& rhs) const { return _value < rhs._value; }
+
+        const Tv& value() const { return _value; }
+        const edges_map_t& edges() const { return _edges; }
+        edges_map_t& edges() { return _edges; }
+    };
+
 
     Graph() {}
-
 
     void clear()
     {
@@ -22,7 +43,7 @@ public:
     template <typename T>
     void addVertice(T&& value)
     {
-        _vertices.emplace(std::forward<T>(value), edges_map_t{});
+        _vertices.emplace(std::forward<T>(value));
     }
 
     void deleteVertice(const Tv& value)
@@ -33,8 +54,8 @@ public:
         {
             for (auto& v : _vertices)
             {
-                auto& edges = v.second;
-                edges.erase(&toBeRemoved->first);
+                auto& edges = const_cast<edges_map_t&>(v.edges());
+                edges.erase(&*toBeRemoved);
             }
 
             _vertices.erase(toBeRemoved);
@@ -51,7 +72,8 @@ public:
             iterTo != _vertices.end() &&
             iterFrom != iterTo)
         {
-            iterFrom->second.emplace(&iterTo->first, std::forward<T>(value));
+            auto& edges = const_cast<edges_map_t&>(iterFrom->edges());
+            edges.emplace(&*iterTo, std::forward<T>(value));
         }
     }
 
@@ -63,42 +85,11 @@ public:
         if (iterFrom != _vertices.end() &&
             iterTo != _vertices.end())
         {
-            auto& edges = iterFrom->second;
-            auto toBeRemoved = edges.find(&iterTo->first);
-
-            if (toBeRemoved != edges.end())
-            {
-                edges.erase(toBeRemoved);
-            }
+            auto& edges = const_cast<edges_map_t&>(iterFrom->edges());
+            edges.erase(&*iterTo);
         }
     }
 
-    // accessing vertices/edges
-    /**
-    * Classes Vertice and Edge are wrappers for std::pair<...> objects returned
-    * by map iterators. They allow to use explicictly named getter methods
-    * instead of accessing them by fields `first` & `second` of the std::pair.
-    *
-    * They can be used in range-based for loops, e.g.:
-    *
-    *   for (Graph<>::Vertice v : graph) {
-    *     for (Graph<>::Edge e : v.edges()) {
-    *         // ...
-    *     }
-    *   }
-    *
-    */
-    class Vertice
-    {
-        using data_t = typename vertices_map_t::value_type;
-        const data_t& _data;
-
-    public:
-        Vertice(const data_t& data) : _data(data) {}
-
-        const Tv& value() const { return _data.first; }
-        const edges_map_t& edges() const { return _data.second; }
-    };
 
     class Edge
     {
@@ -108,26 +99,26 @@ public:
     public:
         Edge(const data_t& data) : _data(data) {}
 
-        const Tv& target() const { return *_data.first; }
+        const Vertice& target() const { return *_data.first; }
         const Te& value() const { return _data.second; }
     };
 
     // iterators
-    using size_type = typename vertices_map_t::size_type;
-    using difference_type = typename vertices_map_t::difference_type;
-    using value_type = typename vertices_map_t::value_type;
-    using reference = typename vertices_map_t::reference;
-    using const_reference = typename vertices_map_t::const_reference;
-    using iterator = typename vertices_map_t::iterator;
-    using const_iterator = typename vertices_map_t::const_iterator;
-    using pointer = typename vertices_map_t::pointer;
-    using const_pointer = typename vertices_map_t::const_pointer;
-
-    const_iterator begin() const { return _vertices.begin(); }
-    const_iterator end() const { return _vertices.end(); }
+    using size_type = typename vertices_set_t::size_type;
+    using difference_type = typename vertices_set_t::difference_type;
+    using value_type = typename vertices_set_t::value_type;
+    using reference = typename vertices_set_t::reference;
+    using const_reference = typename vertices_set_t::const_reference;
+    using iterator = typename vertices_set_t::iterator;
+    using const_iterator = typename vertices_set_t::const_iterator;
+    using pointer = typename vertices_set_t::pointer;
+    using const_pointer = typename vertices_set_t::const_pointer;
 
     iterator begin() { return _vertices.begin(); }
     iterator end() { return _vertices.end(); }
+
+    const_iterator begin() const { return _vertices.begin(); }
+    const_iterator end() const { return _vertices.end(); }
 
     const_iterator find(const Tv& vertice) const
     {
@@ -140,6 +131,6 @@ public:
     }
 
 private:
-    vertices_map_t _vertices;
+    vertices_set_t _vertices;
 };
 

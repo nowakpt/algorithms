@@ -13,7 +13,7 @@ void printGraph(const Graph<>& graph)
         {
             std::cout
                 << "  edge: "
-                << vert.value() << " -> " << edge.target()
+                << vert.value() << " -> " << edge.target().value()
                 << ": " << edge.value() << std::endl;
         }
     }

@@ -29,7 +29,7 @@ TEST(GraphTest, AddDuplicateVertices)
     gr.addVertice(5);
 
     EXPECT_EQ(1, std::distance(gr.begin(), gr.end()));
-    EXPECT_THAT(gr, Contains(Key(5)));
+    EXPECT_THAT(gr, Contains(5));
 }
 
 TEST(GraphTest, DeleteVertice)
