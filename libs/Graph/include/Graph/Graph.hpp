@@ -35,6 +35,16 @@ public:
 
     Graph() {}
 
+    // default move operations
+    Graph(Graph&&) = default;
+    Graph& operator =(Graph&&) = default;
+
+    // copy operations are not allowed, due to raw pointers being used in the graph;
+    // maps of edges would need to be adjusted to correctly point to the new vertices (TODO: implement)
+    Graph(const Graph&) = delete;
+    Graph& operator =(const Graph&) = delete;
+
+
     void clear()
     {
         _vertices.clear();
