@@ -1,5 +1,5 @@
 #pragma once
-#include "Window.hpp"
+#include <AlgoUI/Window.hpp>
 #include "DrawableVertice.hpp"
 #include "DrawableEdge.hpp"
 #include <Graph/Graph.hpp>

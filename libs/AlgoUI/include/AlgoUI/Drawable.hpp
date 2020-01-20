@@ -1,5 +1,5 @@
 #pragma once
-#include "Canvas.hpp"
+#include <AlgoUI/Canvas.hpp>
 #include <mutex>
 
 

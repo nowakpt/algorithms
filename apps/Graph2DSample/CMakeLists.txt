@@ -1,10 +1,8 @@
 add_executable(Graph2DSample
     src/main.cpp
-    src/Window.cpp
     src/DrawableGraph.cpp
     src/DrawableVertice.cpp
     src/DrawableEdge.cpp
-    src/FontLoader.cpp
 )
 
 find_package(Threads REQUIRED)
@@ -12,7 +10,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(Graph2DSample
     PRIVATE
     Graph
-    sfml-graphics
+    AlgoUI
     Threads::Threads
 )
 

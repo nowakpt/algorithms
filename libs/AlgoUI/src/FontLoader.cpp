@@ -1,4 +1,4 @@
-#include "FontLoader.hpp"
+#include <AlgoUI/FontLoader.hpp>
 
 FontLoader::LoadedFont::LoadedFont()
 {

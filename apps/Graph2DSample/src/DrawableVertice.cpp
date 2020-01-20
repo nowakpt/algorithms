@@ -1,5 +1,5 @@
 #include "DrawableVertice.hpp"
-#include "FontLoader.hpp"
+#include <AlgoUI/FontLoader.hpp>
 
 
 DrawableVertice::DrawableVertice(const sf::Vector2f& position, char label) :

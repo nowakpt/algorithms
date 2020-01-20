@@ -1,4 +1,4 @@
-#include "Window.hpp"
+#include <AlgoUI/Window.hpp>
 #include <thread>
 #include <chrono>
 

@@ -1,6 +1,5 @@
 #pragma once
-#include "Drawable.hpp"
-#include <SFML/Graphics.hpp>
+#include <AlgoUI/Drawable.hpp>
 
 
 class DrawableVertice : public Drawable

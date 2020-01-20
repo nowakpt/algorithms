@@ -2,8 +2,7 @@
 #include <memory>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include <SFML/Graphics/View.hpp>
-#include "Drawable.hpp"
+#include <AlgoUI/Drawable.hpp>
 
 
 class Window

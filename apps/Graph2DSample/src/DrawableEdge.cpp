@@ -1,5 +1,5 @@
 #include "DrawableEdge.hpp"
-#include "FontLoader.hpp"
+#include <AlgoUI/FontLoader.hpp>
 #include <cmath>
 
 
