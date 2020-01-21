@@ -19,7 +19,7 @@ public:
 /*
  * UpdatableDrawable: mixin-style extension of class Drawable
  * (and its subclasses) that allows to update the drawable object
- * in another thread.
+ * in a different thread.
  *
  */
 template <typename BASE>
@@ -36,7 +36,6 @@ public:
 
     /* Arguments of this method should be compliant with arguments
      * of a BASE class constructor.
-     *
      */
     template <typename... Args>
     void update(Args&&... args)
