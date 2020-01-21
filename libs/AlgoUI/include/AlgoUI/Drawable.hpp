@@ -41,7 +41,7 @@ public:
     template <typename... Args>
     void update(Args&&... args)
     {
-        BASE newDrawable(std::forward<Args...>(args...));
+        BASE newDrawable(std::forward<Args>(args)...);
 
         std::lock_guard<std::mutex> lock(accessControl);
         std::swap<BASE>(*this, newDrawable);

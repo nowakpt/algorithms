@@ -14,9 +14,9 @@ public:
     }
 
     template <typename... Args>
-    void draw(Args... args)
+    void draw(Args&&... args)
     {
-        _window.draw(args...);
+        _window.draw(std::forward<Args>(args)...);
     }
 
 };
