@@ -2,7 +2,6 @@
 #include <thread>
 #include <chrono>
 #include <array>
-#include <Graph/Graph.hpp>
 #include <AlgoUI/Window.hpp>
 #include "DrawableGraph.hpp"
 
