@@ -2,6 +2,8 @@
 #include <AlgoUI/Canvas.hpp>
 #include <mutex>
 
+namespace algo {
+namespace ui {
 
 /*
  * Simple interface of a drawable class.
@@ -47,4 +49,7 @@ public:
     }
 
 };
+
+} // namespace ui
+} // namespace algo
 

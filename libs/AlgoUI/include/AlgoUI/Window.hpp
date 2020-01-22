@@ -4,6 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include <AlgoUI/Drawable.hpp>
 
+namespace algo {
+namespace ui {
 
 class Window
 {
@@ -32,4 +34,7 @@ public:
     }
 
 };
+
+} // namespace ui
+} // namespace algo
 

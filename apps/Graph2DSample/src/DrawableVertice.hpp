@@ -2,7 +2,7 @@
 #include <AlgoUI/Drawable.hpp>
 
 
-class DrawableVertice : public Drawable
+class DrawableVertice : public algo::ui::Drawable
 {
     sf::CircleShape _circle;
     sf::Text _label;
@@ -13,7 +13,7 @@ public:
 
     DrawableVertice(const sf::Vector2f& position, char label);
 
-    void draw(Canvas& canvas) override
+    void draw(algo::ui::Canvas& canvas) override
     {
         canvas.draw(_circle);
         canvas.draw(_label);

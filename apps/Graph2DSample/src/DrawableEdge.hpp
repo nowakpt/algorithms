@@ -2,7 +2,7 @@
 #include <AlgoUI/Drawable.hpp>
 
 
-class DrawableEdge : public Drawable
+class DrawableEdge : public algo::ui::Drawable
 {
     sf::RectangleShape _line;
     sf::ConvexShape _arrowTip;
@@ -18,7 +18,7 @@ public:
 
     DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, double angle, int value);
 
-    void draw(Canvas& canvas) override
+    void draw(algo::ui::Canvas& canvas) override
     {
         canvas.draw(_line);
         canvas.draw(_arrowTip);

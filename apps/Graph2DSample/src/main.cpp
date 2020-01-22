@@ -5,10 +5,10 @@
 #include <AlgoUI/Window.hpp>
 #include "DrawableGraph.hpp"
 
-
 using Graph2D = DrawableGraph::Graph2D;
 using Vertice = DrawableGraph::Point;
-using UDGraph = UpdatableDrawable<DrawableGraph>;
+using UDGraph = algo::ui::UpdatableDrawable<DrawableGraph>;
+using algo::ui::Window;
 
 
 void sleep()

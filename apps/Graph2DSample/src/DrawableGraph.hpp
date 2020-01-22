@@ -5,7 +5,7 @@
 
 
 
-class DrawableGraph : public Drawable
+class DrawableGraph : public algo::ui::Drawable
 {
 public:
     struct Point
@@ -26,7 +26,7 @@ public:
     DrawableGraph();
     DrawableGraph(const Graph2D& graph);
 
-    void draw(Canvas& canvas) override;
+    void draw(algo::ui::Canvas& canvas) override;
 
 private:
     std::vector<DrawableVertice> _drawableVertices;

@@ -9,7 +9,7 @@ DrawableVertice::DrawableVertice(const sf::Vector2f& position, char label) :
     _circle.setPosition(position);
 
     _label.setString(sf::String(label));
-    _label.setFont(FontLoader::getFont());
+    _label.setFont(algo::ui::FontLoader::getFont());
     _label.setFillColor(sf::Color::Black);
     _label.setCharacterSize(textSize);
 

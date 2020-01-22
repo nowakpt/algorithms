@@ -1,6 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+namespace algo {
+namespace ui {
+
 class Canvas
 {
     sf::RenderWindow& _window;
@@ -20,4 +23,7 @@ public:
     }
 
 };
+
+} // namespace ui
+} // namespace algo
 

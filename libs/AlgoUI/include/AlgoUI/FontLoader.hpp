@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics/Font.hpp>
 
+namespace algo {
+namespace ui {
 
 class FontLoader
 {
@@ -14,4 +16,7 @@ private:
         sf::Font _font;
     };
 };
+
+} // namespace ui
+} // namespace algo
 

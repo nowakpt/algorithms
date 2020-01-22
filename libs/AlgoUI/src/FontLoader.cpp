@@ -1,5 +1,8 @@
 #include <AlgoUI/FontLoader.hpp>
 
+using namespace algo::ui;
+
+
 FontLoader::LoadedFont::LoadedFont()
 {
     //TODO: use fontconfig to load fonts

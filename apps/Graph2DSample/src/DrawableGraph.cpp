@@ -13,7 +13,7 @@ DrawableGraph::DrawableGraph(const Graph2D& graph)
 }
 
 
-void DrawableGraph::draw(Canvas& canvas)
+void DrawableGraph::draw(algo::ui::Canvas& canvas)
 {
     canvas.clear(sf::Color(40, 40, 40, 255));
 

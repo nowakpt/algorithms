@@ -2,8 +2,11 @@
 #include <thread>
 #include <chrono>
 
-namespace
-{
+using namespace algo::ui;
+
+
+namespace {
+
 static sf::ContextSettings getContextSettings()
 {
     sf::ContextSettings settings {};

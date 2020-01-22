@@ -25,7 +25,7 @@ DrawableEdge::DrawableEdge(const sf::Vector2f& from, const sf::Vector2f& to, dou
     float labelPosX = 0.20 * from.x + 0.80 * to.x - labelDistance * sin(angle);
     float labelPosY = 0.20 * from.y + 0.80 * to.y + labelDistance * cos(angle);
     _label.setString(std::to_string(value));
-    _label.setFont(FontLoader::getFont());
+    _label.setFont(algo::ui::FontLoader::getFont());
     _label.setCharacterSize(textSize);
 
     auto labelBounds = _label.getLocalBounds();
