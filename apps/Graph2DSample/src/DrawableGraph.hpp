@@ -20,7 +20,7 @@ public:
         }
     };
 
-    using Graph2D = Graph<Point, int>;
+    using Graph2D = algo::Graph<Point, int>;
 
 
     DrawableGraph();

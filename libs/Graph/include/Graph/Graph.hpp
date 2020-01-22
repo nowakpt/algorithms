@@ -3,6 +3,8 @@
 #include <map>
 #include <memory>
 
+namespace algo
+{
 
 template <typename Tv = int, typename Te = int>
 class Graph
@@ -143,4 +145,6 @@ public:
 private:
     vertices_set_t _vertices;
 };
+
+} // namespace algo
 

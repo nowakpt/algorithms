@@ -1,6 +1,8 @@
 #include <iostream>
 #include <Graph/Graph.hpp>
 
+using algo::Graph;
+
 
 void printGraph(const Graph<>& graph)
 {

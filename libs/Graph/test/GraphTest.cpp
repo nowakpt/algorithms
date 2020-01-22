@@ -6,6 +6,8 @@ using ::testing::BeginEndDistanceIs;
 using ::testing::Contains;
 using ::testing::Key;
 
+using algo::Graph;
+
 
 TEST(GraphTest, CreateEmptyGraph)
 {
