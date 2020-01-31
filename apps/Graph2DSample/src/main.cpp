@@ -3,52 +3,86 @@
 #include <chrono>
 #include <array>
 #include <AlgoUI/Window.hpp>
+#include <CommandParser/CommandParser.hpp>
 #include "DrawableGraph.hpp"
 
 using Graph2D = DrawableGraph::Graph2D;
 using Vertice = DrawableGraph::Point;
 using UDGraph = algo::ui::UpdatableDrawable<DrawableGraph>;
 using algo::ui::Window;
+using algo::cmd::CommandParser;
 
 
-void sleep()
+void parseInput(std::shared_ptr<UDGraph> dg)
 {
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-}
+    Graph2D gr;
 
-
-void addElementsToGraph(std::shared_ptr<UDGraph> dg)
-{
-    Graph2D graph;
-
-    std::array<const Vertice, 5> vertices = {{
-        {100, 100, 'A'},
-        {100, 500, 'B'},
-        {400, 550, 'C'},
-        {700, 500, 'D'},
-        {700, 100, 'E'}
-    }};
-
-    for (const auto& v : vertices) {
-        graph.addVertice(v);
-        dg->update(graph);
-        sleep();
-    }
-
-    int value = 10;
-
-    for (int i = 0; i < 5; i++)
-    {
-        for (int j = 0; j < 5; j++)
+    CommandParser::CommandsMap commands {
         {
-            if (i == j) continue;
+            "addVertice", [&](std::istringstream& args)
+            {
+                Vertice v;
+                args >> v.x >> v.y >> v.id;
+                if (!args)
+                {
+                    std::cout << "invalid parameters" << std::endl;
+                    return;
+                }
+                gr.addVertice(v);
+                dg->update(gr);
+                std::cout << "addVertice complete" << std::endl;
+            }
+        },
+        {
+            "addEdge", [&](std::istringstream& args)
+            {
+                Vertice from, to;
+                int value;
+                args >> from.id >> to.id >> value;
+                if (!args)
+                {
+                    std::cout << "invalid parameters" << std::endl;
+                    return;
+                }
+                gr.addEdge(from, to, value);
+                dg->update(gr);
+                std::cout << "addEdge complete" << std::endl;
+            }
+        },
+        {
+            "deleteVertice", [&](std::istringstream& args)
+            {
+                Vertice v;
+                args >> v.id;
+                if (!args)
+                {
+                    std::cout << "invalid parameters" << std::endl;
+                    return;
+                }
+                gr.deleteVertice(v);
+                dg->update(gr);
+                std::cout << "deleteVertice complete" << std::endl;
+            }
+        },
+        {
+            "deleteEdge", [&](std::istringstream& args)
+            {
+                Vertice from, to;
+                args >> from.id >> to.id;
+                if (!args)
+                {
+                    std::cout << "invalid parameters" << std::endl;
+                    return;
+                }
+                gr.deleteEdge(from, to);
+                dg->update(gr);
+                std::cout << "deleteEdge complete" << std::endl;
+            }
+        },
+    };
 
-            graph.addEdge(vertices[i], vertices[j], value++);
-            dg->update(graph);
-            sleep();
-        }
-
-    }
+    CommandParser parser(commands);
+    parser.parse(std::cin, std::cout);
 }
 
 
@@ -63,11 +97,11 @@ int main()
 
     window.setDrawable(dg);
 
-    std::thread updater(addElementsToGraph, dg);
+    std::thread parserThread(parseInput, std::move(dg));
 
     window.startEventHandling();
 
-    updater.join();
+    parserThread.join();
 
     return 0;
 }

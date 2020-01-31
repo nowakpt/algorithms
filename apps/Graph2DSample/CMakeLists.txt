@@ -11,6 +11,7 @@ target_link_libraries(Graph2DSample
     PRIVATE
     Graph
     AlgoUI
+    CommandParser
     Threads::Threads
 )
 
