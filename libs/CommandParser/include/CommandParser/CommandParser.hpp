@@ -1,6 +1,7 @@
 #pragma once
 #include <functional>
 #include <iostream>
+#include <sstream>
 #include <map>
 
 
@@ -10,7 +11,7 @@ namespace cmd {
 class CommandParser
 {
 public:
-    using CommandHandler = std::function<void(const std::string&)>;
+    using CommandHandler = std::function<void(std::istringstream&)>;
     using CommandsMap = std::map<std::string, CommandHandler>;
 
     CommandParser(const CommandsMap& commands);

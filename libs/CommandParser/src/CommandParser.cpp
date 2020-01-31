@@ -42,10 +42,10 @@ void CommandParser::parseLine(const std::string& line) const
 
     if (searchResult == _commands.end()) throw CommandNotFoundException {};
 
-    std::string commandParams;
+    std::istringstream commandParams;
     if (firstSpaceIndex != std::string::npos)
     {
-        commandParams = line.substr(firstSpaceIndex+1);
+        commandParams.str(line.substr(firstSpaceIndex+1));
     }
 
     searchResult->second(commandParams);

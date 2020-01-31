@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock-matchers.h>
 #include <CommandParser/CommandParser.hpp>
+#include <vector>
 
 using ::testing::HasSubstr;
 
@@ -12,9 +13,9 @@ TEST(CommandParserTest, parseAndExecuteCommand)
     int callCount = 0;
     CommandParser::CommandsMap map
     {{
-        "test", [&](const std::string& args) {
+        "test", [&](std::istringstream& args) {
             callCount++;
-            EXPECT_EQ("hello world", args);
+            EXPECT_EQ("hello world", args.str());
         }
     }};
 
@@ -34,7 +35,7 @@ TEST(CommandParserTest, invalidCommand)
     int callCount = 0;
     CommandParser::CommandsMap map
     {{
-        "test", [&](const std::string& args) {
+        "test", [&](std::istringstream& args) {
             callCount++;
         }
     }};
@@ -55,7 +56,7 @@ TEST(CommandParserTest, handleEmptyLine)
     int callCount = 0;
     CommandParser::CommandsMap map
     {{
-        "", [&](const std::string& args) {
+        "", [&](std::istringstream& args) {
             // should not be called, even if provided keyword is an empty string
             callCount++;
         }
