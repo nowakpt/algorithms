@@ -51,6 +51,34 @@ TEST(CommandParserTest, invalidCommand)
 }
 
 
+TEST(CommandParserTest, multipleCallsWithDifferentArguments)
+{
+    std::vector<std::string> receivedArguments;
+    int callCount = 0;
+    CommandParser::CommandsMap map
+    {{
+        "test", [&](std::istringstream& args) {
+            callCount++;
+            receivedArguments.push_back(args.str());
+        }
+    }};
+
+    std::stringstream input {"test\ntest abc\ntest  123 45 \ntest hello world"};
+    std::stringstream output;
+
+    CommandParser cp(map);
+    cp.parse(input, output);
+
+    EXPECT_EQ("> > > > ", output.str());
+    EXPECT_EQ(4, callCount);
+    ASSERT_EQ(4, receivedArguments.size());
+    EXPECT_EQ("", receivedArguments[0]);
+    EXPECT_EQ("abc", receivedArguments[1]);
+    EXPECT_EQ(" 123 45 ", receivedArguments[2]);
+    EXPECT_EQ("hello world", receivedArguments[3]);
+}
+
+
 TEST(CommandParserTest, handleEmptyLine)
 {
     int callCount = 0;
