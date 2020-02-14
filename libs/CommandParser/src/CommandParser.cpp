@@ -25,9 +25,9 @@ void CommandParser::parse(std::istream& input, std::ostream& output) const
         {
             parseLine(line);
         }
-        catch (const CommandNotFoundException& ex)
+        catch (const ParseException& ex)
         {
-            output << "error: invalid command" << std::endl;
+            output << "error: " << ex.message << std::endl;
         }
     }
 }
@@ -40,7 +40,7 @@ void CommandParser::parseLine(const std::string& line) const
 
     auto searchResult = _commands.find(command);
 
-    if (searchResult == _commands.end()) throw CommandNotFoundException {};
+    if (searchResult == _commands.end()) throw ParseException {"invalid command"};
 
     std::istringstream commandParams;
     if (firstSpaceIndex != std::string::npos)

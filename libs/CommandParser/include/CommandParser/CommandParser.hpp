@@ -18,12 +18,15 @@ public:
 
     void parse(std::istream& input, std::ostream& output) const;
 
+    struct ParseException
+    {
+        std::string message;
+    };
+
 private:
     const CommandsMap& _commands;
 
     void parseLine(const std::string& line) const;
-
-    struct CommandNotFoundException {};
 };
 
 } // namespace cmd
