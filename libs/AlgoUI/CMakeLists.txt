@@ -8,5 +8,6 @@ target_include_directories(AlgoUI PUBLIC include)
 target_link_libraries(AlgoUI
     PUBLIC
     sfml-graphics
+    sfmlFont
 )
 

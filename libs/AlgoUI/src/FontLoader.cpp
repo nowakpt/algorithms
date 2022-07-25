@@ -5,8 +5,13 @@ using namespace algo::ui;
 
 FontLoader::LoadedFont::LoadedFont()
 {
-    //TODO: use fontconfig to load fonts
-    _font.loadFromFile("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf");
+#ifdef SFML_FONT_PATH
+	const char fontPath[] = SFML_FONT_PATH;
+#else
+	const char fontPath[] = "/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf";
+#endif
+
+    _font.loadFromFile(fontPath);
 }
 
 const sf::Font& FontLoader::getFont()
