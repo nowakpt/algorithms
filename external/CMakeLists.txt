@@ -15,3 +15,6 @@ INTERFACE
     SFML_FONT_PATH="${sfmlFontPath}"
 )
 
+add_subdirectory(googletest)
+include(CTest)
+

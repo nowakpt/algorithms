@@ -3,9 +3,6 @@ project(algorithms VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
-include(CTest)
-include(cmake/GTestDownload.cmake)
-
 add_subdirectory(libs)
 add_subdirectory(apps)
 add_subdirectory(external)
